@@ -503,7 +503,7 @@ if [ "$opt_live" = 1 ]; then
 	# if we didn't find a kernel, default to guessing
 	if [ ! -e "$opt_kernel" ]; then
 		# pine64 board:
-		[ -e /boot/pine64              ] && opt_kernel=/boot/pine64
+		[ -e /boot/pine64/Image        ] && opt_kernel=/boot/pine64/Image
 		# Slackare:
 		[ -e /boot/vmlinuz             ] && opt_kernel=/boot/vmlinuz
 		# Arch:
