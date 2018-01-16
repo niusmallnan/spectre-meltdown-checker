@@ -502,12 +502,21 @@ if [ "$opt_live" = 1 ]; then
 	fi
 	# if we didn't find a kernel, default to guessing
 	if [ ! -e "$opt_kernel" ]; then
+		# pine64 board:
+		[ -e /boot/pine64              ] && opt_kernel=/boot/pine64
+		# Slackare:
+		[ -e /boot/vmlinuz             ] && opt_kernel=/boot/vmlinuz
+		# Arch:
 		[ -e /boot/vmlinuz-linux       ] && opt_kernel=/boot/vmlinuz-linux
+		# Linux-Libre:
 		[ -e /boot/vmlinuz-linux-libre ] && opt_kernel=/boot/vmlinuz-linux-libre
+		# generic:
 		[ -e /boot/vmlinuz-$(uname -r) ] && opt_kernel=/boot/vmlinuz-$(uname -r)
 		[ -e /boot/kernel-$( uname -r) ] && opt_kernel=/boot/kernel-$( uname -r)
 		[ -e /boot/bzImage-$(uname -r) ] && opt_kernel=/boot/bzImage-$(uname -r)
+		# Gentoo:
 		[ -e /boot/kernel-genkernel-$(uname -m)-$(uname -r) ] && opt_kernel=/boot/kernel-genkernel-$(uname -m)-$(uname -r)
+		# NixOS:
 		[ -e /run/booted-system/kernel ] && opt_kernel=/run/booted-system/kernel
 	fi
 
