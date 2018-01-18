@@ -9,4 +9,4 @@ if [ ! -e $STAMP ]; then
     touch $STAMP
 fi
 
-./spectre-meltdown-checker.sh
+./spectre-meltdown-checker.sh $@
