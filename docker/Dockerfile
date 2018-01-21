@@ -1,7 +1,7 @@
 FROM ubuntu:xenial
 # FROM arm64=arm64v8/ubuntu:xenial
 
-ENV CHECKER_VERSION v0.31
+ENV CHECKER_VERSION v0.32
 
 RUN apt-get update \
         && apt-get install -y --no-install-recommends binutils xz-utils \
