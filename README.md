@@ -1,7 +1,7 @@
 Spectre & Meltdown Checker
 ==========================
 
-A shell script to tell if your system is vulnerable against the several "speculative execution" CVEs that were made public in 2018.
+A shell script to tell if your system is vulnerable against the several "speculative execution" CVEs that were made public since 2018.
 - CVE-2017-5753 [bounds check bypass] aka 'Spectre Variant 1'
 - CVE-2017-5715 [branch target injection] aka 'Spectre Variant 2'
 - CVE-2017-5754 [rogue data cache load] aka 'Meltdown' aka 'Variant 3'
@@ -10,6 +10,10 @@ A shell script to tell if your system is vulnerable against the several "specula
 - CVE-2018-3615 [L1 terminal fault] aka 'Foreshadow (SGX)'
 - CVE-2018-3620 [L1 terminal fault] aka 'Foreshadow-NG (OS)'
 - CVE-2018-3646 [L1 terminal fault] aka 'Foreshadow-NG (VMM)'
+- CVE-2018-12126 [microarchitectural store buffer data sampling (MSBDS)] aka 'Fallout'
+- CVE-2018-12130 [microarchitectural fill buffer data sampling (MFBDS)] aka 'ZombieLoad'
+- CVE-2018-12127 [microarchitectural load port data sampling (MLPDS)] aka 'RIDL'
+- CVE-2019-11091 [microarchitectural data sampling uncacheable memory (MDSUM)] aka 'RIDL'
 
 Supported operating systems:
 - Linux (all versions, flavors and distros)
@@ -110,17 +114,36 @@ docker run --rm --privileged -v /boot:/boot:ro -v /dev/cpu:/dev/cpu:ro -v /lib/m
    - Mitigation: microcode update + kernel update making possible for affected software to protect itself
    - Performance impact of the mitigation: low to medium
 
-**CVE-2018-3615** l1 terminal fault (Foreshadow)
+**CVE-2018-3615** l1 terminal fault (Foreshadow-NG SGX)
 
-   - TBC
+   - Impact: Kernel & all software (any physical memory address in the system)
+   - Mitigation: microcode update
+   - Performance impact of the mitigation: negligible
 
-**CVE-2018-3620** l1 terminal fault (Foreshadow-NG)
+**CVE-2018-3620** l1 terminal fault (Foreshadow-NG SMM)
 
-   - TBC
+   - Impact: Kernel & System management mode
+   - Mitigation: updated kernel (with PTE inversion)
+   - Performance impact of the mitigation: negligible
 
-**CVE-2018-3646** l1 terminal fault (Foreshadow-NG)
+**CVE-2018-3646** l1 terminal fault (Foreshadow-NG VMM)
 
-   - TBC
+   - Impact: Virtualization software and Virtual Machine Monitors
+   - Mitigation: disable ept (extended page tables), disable hyper-threading (SMT), or updated kernel (with L1d flush)
+   - Performance impact of the mitigation: low to significant
+
+**CVE-2018-12126** [MSBDS] Microarchitectural Store Buffer Data Sampling (Fallout)
+
+**CVE-2018-12130** [MFBDS] Microarchitectural Fill Buffer Data Sampling (ZombieLoad)
+
+**CVE-2018-12127** [MLPDS] Microarchitectural Load Port Data Sampling (RIDL)
+
+**CVE-2019-11091** [MDSUM] Microarchitectural Data Sampling Uncacheable Memory (RIDL)
+
+   - Note: These 4 CVEs are similar and collectively named "MDS" vulnerabilities, the mitigation is identical for all
+   - Impact: Kernel
+   - Mitigation: microcode update + kernel update making possible to protect various CPU internal buffers from unprivileged speculative access to data
+   - Performance impact of the mitigation: low to significant
 
 ## Understanding what this script does and doesn't
 
